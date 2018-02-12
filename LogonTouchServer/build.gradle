@@ -1,0 +1,42 @@
+group 'LogonTouchServer'
+version '1.0-SNAPSHOT'
+
+buildscript {
+    ext.kotlin_version = '1.2.20'
+
+    repositories {
+        mavenCentral()
+    }
+    dependencies {
+        classpath "org.jetbrains.kotlin:kotlin-gradle-plugin:$kotlin_version"
+    }
+}
+
+apply plugin: 'java'
+apply plugin: 'kotlin'
+
+sourceCompatibility = 1.8
+
+sourceSets {
+    main.java.srcDirs += 'src/main/java/'
+}
+
+repositories {
+    mavenCentral()
+}
+
+dependencies {
+    compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
+    compile group: 'org.glassfish.jersey.core', name: 'jersey-server', version: '2.7'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-servlet-core', version: '2.7'
+    compile group: 'org.glassfish.jersey.containers', name: 'jersey-container-jetty-http', version: '2.7'
+    compile group: 'org.glassfish.jersey.media', name: 'jersey-media-json-jackson', version: '2.7'
+    compile group: 'org.eclipse.jetty.aggregate', name: 'jetty-all', version: '9.4.7.v20170914'
+    compile group: 'org.apache.commons', name: 'commons-lang3', version: '3.0'
+    compile 'com.google.code.gson:gson:2.8.2'
+    compile group: 'net.java.dev.jna', name: 'jna-platform', version: '4.5.1'
+}
+
+compileKotlin {
+    kotlinOptions.jvmTarget = "1.8"
+}
