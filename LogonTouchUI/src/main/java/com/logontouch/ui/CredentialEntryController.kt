@@ -6,6 +6,7 @@ import com.logontouch.server.LogonTouchServer
 import com.logontouch.ui.dict.ServiceError
 import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
+import org.apache.commons.lang3.RandomStringUtils
 import tornadofx.Controller
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
@@ -15,7 +16,6 @@ class CredentialEntryController: Controller(){
     private lateinit var mLogonTouchServer: LogonTouchServer
     private val mCredentialModel: CredentialModel by CredentialModelDelegate()
     private val mCredentialView: CredentialsGenerateView by inject()
-    private val mSessionHashMock = "1234567"
 
     init {
         val current = getWinLogonAccount()
@@ -97,15 +97,17 @@ class CredentialEntryController: Controller(){
         val credsHolder = mCredentialModel.generateCredentialSecret(domain, username, password)
         val certs = mCredentialModel.generateCredentialCertificates()
 
+        val sessionHash = RandomStringUtils.random(10, true, true)
+
         //send public certificate to server for client verification
-        var res = with(HostCertificate(mSessionHashMock, certs.publicCertificate, certs.publicKeyStoreKey)){
+        var res = with(HostCertificate(sessionHash, certs.publicCertificate, certs.publicKeyStoreKey)){
             mCredentialModel.postCredentialCertificate(this, CredentialModel.REGISTER_PUBLIC_CERTIFICATE)
         }
 
         println("Post public certs res=[$res]")
 
         //send private certificate and ciphered credentials to server for client to fetch it from
-        res = with(ClientPrivateCertificate(mSessionHashMock,
+        res = with(ClientPrivateCertificate(sessionHash,
                 certs.privateCertificate,
                 credsHolder.encodedCreds)) {
             mCredentialModel.postCredentialCertificate(this, CredentialModel.REGISTER_PRIVATE_CERTIFICATE)
@@ -113,7 +115,7 @@ class CredentialEntryController: Controller(){
 
         println("Post private certs res=[$res]")
 
-        return ClientSecretKeys(mSessionHashMock,
+        return ClientSecretKeys(sessionHash,
                 certs.privateKeyStoreKey.joinToString(separator = ""),
                 credsHolder.encodedSecretKey,
                 credsHolder.encodedIV)
