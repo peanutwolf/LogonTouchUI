@@ -2,19 +2,13 @@ package com.logontouch.ui
 
 import com.google.gson.Gson
 import com.logontouch.helper.*
-
 import com.logontouch.server.LogonTouchServer
 import com.logontouch.ui.dict.ServiceError
 import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
 import tornadofx.Controller
-import java.util.*
-import java.util.concurrent.Callable
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-import java.util.concurrent.Executors
-import java.util.concurrent.ScheduledExecutorService
-import java.util.concurrent.TimeUnit
 
 
 class CredentialEntryController: Controller(){
@@ -53,14 +47,16 @@ class CredentialEntryController: Controller(){
 
         mLogonTouchServer.serverAssemble(serverCfg, this::onCertificateUpload)
         Thread{
-            mLogonTouchServer.serverStart({
-                Platform.runLater{
+                 mLogonTouchServer.serverStart({ Platform.runLater{
                     checkServiceAvailable()
                 }
             }, {
                 mLogonTouchServer.serverStop()
                 Platform.runLater {
-                    mCredentialView.showServiceStatus(ServiceError.SERVER_FAULT)
+                    mCredentialView.showServiceStatus(ServiceError.SERVER_FAULT.also {
+                        it.mHTTPServerPort =  serverCfg.httpPort
+                        it.mHTTPSServerPort = serverCfg.httpsPort
+                    })
                 }
             })
         }.start()

@@ -8,4 +8,9 @@ enum class ServiceError{
     CONFIG_ERROR,
     NOT_REACHABLE,
     ACCESS_DENY;
+
+    var mHTTPServerPort = 8080
+    var mHTTPSServerPort = 7779
+
+
 }

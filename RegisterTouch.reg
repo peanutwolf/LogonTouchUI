@@ -5,12 +5,12 @@ Windows Registry Editor Version 5.00
 "Config"="E:\\workspace\\IdeaProjects\\LogonTouch\\config.xml"
 
 [HKEY_LOCAL_MACHINE\SOFTWARE\Microsoft\Windows\CurrentVersion\Authentication\Credential Providers\{E71A8049-6A91-4EDA-A703-1DD68781C379}]
-@="https_service"
+@="LogonTouchCredProvider"
 
 [HKEY_CLASSES_ROOT\CLSID\{E71A8049-6A91-4eda-A703-1DD68781C379}]
-@="https_service"
+@="LogonTouchCredProvider"
 
 [HKEY_CLASSES_ROOT\CLSID\{E71A8049-6A91-4eda-A703-1DD68781C379}\InprocServer32]
-@="https_service.dll"
+@="LogonTouchCredProvider.dll"
 "ThreadingModel"="Apartment"
 
