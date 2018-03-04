@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="ProjectModuleManager">
+    <modules>
+      <module fileurl="file://$PROJECT_DIR$/LogonTouch.iml" filepath="$PROJECT_DIR$/LogonTouch.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/302374760/LogonTouchServer.iml" filepath="$PROJECT_DIR$/.idea/modules/302374760/LogonTouchServer.iml" group="LogonTouchServer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchServer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchServer_main.iml" group="LogonTouchServer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchServer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchServer_test.iml" group="LogonTouchServer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchUI.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchUI.iml" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchUI_main.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchUI_main.iml" group="LogonTouchUI" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchUI_test.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchUI_test.iml" group="LogonTouchUI" />
+    </modules>
+  </component>
+</project>
