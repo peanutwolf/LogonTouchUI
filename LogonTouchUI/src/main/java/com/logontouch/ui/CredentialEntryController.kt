@@ -103,20 +103,16 @@ class CredentialEntryController: Controller(){
         val sessionHash = RandomStringUtils.random(10, true, true)
 
         //send public certificate to server for client verification
-        var res = with(HostCertificate(sessionHash, certs.publicCertificate, certs.publicKeyStoreKey)){
+        with(HostCertificate(sessionHash, certs.publicCertificate, certs.publicKeyStoreKey)){
             mCredentialModel.postCredentialCertificate(this, CredentialModel.REGISTER_PUBLIC_CERTIFICATE)
         }
 
-        println("Post public certs res=[$res]")
-
         //send private certificate and ciphered credentials to server for client to fetch it from
-        res = with(ClientPrivateCertificate(sessionHash,
+        with(ClientPrivateCertificate(sessionHash,
                 certs.privateCertificate,
                 credsHolder.encodedCreds)) {
             mCredentialModel.postCredentialCertificate(this, CredentialModel.REGISTER_PRIVATE_CERTIFICATE)
         }
-
-        println("Post private certs res=[$res]")
 
         return ClientSecretKeys(sessionHash,
                 certs.privateKeyStoreKey.joinToString(separator = ""),

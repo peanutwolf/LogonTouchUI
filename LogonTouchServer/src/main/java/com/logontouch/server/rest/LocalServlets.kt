@@ -39,8 +39,6 @@ class RegisterClient(private val sslContextFactory: SslContextFactory, private v
 
         mSessionContext.mSessionHash = publicCertificate.sessionHash
 
-        println("Received public certs")
-
         return Response.status(200).build()
     }
 
@@ -53,8 +51,6 @@ class RegisterClient(private val sslContextFactory: SslContextFactory, private v
         File(LogonTouchServer.CLIENT_CREDENTIALS_FULL_PATH).useOutputWithDirs {
             it.write(privateCertificate.cipheredCredentials.toByteArray())
         }
-
-        println("Received private certs")
 
         return Response.status(200).build()
     }
