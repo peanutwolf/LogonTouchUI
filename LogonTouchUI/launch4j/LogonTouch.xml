@@ -2,8 +2,8 @@
 <launch4jConfig>
   <dontWrapJar>true</dontWrapJar>
   <headerType>gui</headerType>
-  <jar>LogonTouchUI-1.0-SNAPSHOT.jar</jar>
-  <outfile>C:\Users\Vigurskiy\IdeaProjects\LogonTouch\LogonTouchUI\build\libs\LogonTouchUI.exe</outfile>
+  <jar>LogonTouchUI-0.1.jar</jar>
+  <outfile>..\build\libs\LogonTouchUI.exe</outfile>
   <errTitle>Java not installed</errTitle>
   <cmdLine></cmdLine>
   <chdir></chdir>
@@ -13,7 +13,7 @@
   <stayAlive>false</stayAlive>
   <restartOnCrash>false</restartOnCrash>
   <manifest></manifest>
-  <icon></icon>
+  <icon>LogonTouchIco.ico</icon>
   <singleInstance>
     <mutexName>LogonTouch</mutexName>
     <windowTitle></windowTitle>

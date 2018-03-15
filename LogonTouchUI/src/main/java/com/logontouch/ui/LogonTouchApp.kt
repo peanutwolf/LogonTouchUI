@@ -5,9 +5,6 @@ import javafx.scene.image.Image
 import javafx.stage.Stage
 import tornadofx.App
 import tornadofx.addStageIcon
-import java.io.File
-import java.io.FileInputStream
-
 
 /**``
  * Created by pEANUTwOLF on 26.11.2017.
@@ -30,14 +27,12 @@ class LogonTouchUIApp : App(CredentialsGenerateView::class, Styles::class){
     }
 
     private fun setStageIcons(resDir: String){
-        val resURL = this::class.java.classLoader.getResource(resDir) ?: return
-        File(resURL.toURI())
-                .takeIf { it.isDirectory }
-                ?.listFiles()
-                ?.map { Image(FileInputStream(it)) }
-                ?.forEach{
-                    addStageIcon(it)
-                }
+        arrayOf("Icon-App-16x16.png",
+                "Icon-App-20x02.png",
+                "Icon-App-32x32.png")
+                .mapNotNull { this::class.java.classLoader.getResourceAsStream("$resDir/$it") }
+                .map { Image(it) }
+                .forEach{addStageIcon(it)}
     }
 }
 
