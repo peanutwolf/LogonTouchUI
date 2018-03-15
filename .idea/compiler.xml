@@ -2,18 +2,10 @@
 <project version="4">
   <component name="CompilerConfiguration">
     <bytecodeTargetLevel>
-      <module name="CredentialHelper_main" target="1.8" />
-      <module name="CredentialHelper_test" target="1.8" />
-      <module name="LogonTouch_main" target="1.8" />
-      <module name="LogonTouch_test" target="1.8" />
       <module name="LogonTouchServer_main" target="1.8" />
-      <module name="logontouchserver_main" target="1.8" />
       <module name="LogonTouchServer_test" target="1.8" />
-      <module name="logontouchserver_test" target="1.8" />
       <module name="LogonTouchUI_main" target="1.8" />
-      <module name="LogontouchUI_main" target="1.8" />
       <module name="LogonTouchUI_test" target="1.8" />
-      <module name="LogontouchUI_test" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

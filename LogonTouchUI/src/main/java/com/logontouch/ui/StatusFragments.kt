@@ -30,11 +30,12 @@ class StatusFragment: Fragment() {
 
     fun setServerIdleMode(error: ServiceError){
         mStatusLabel.text = when(error){
-            OK             -> "Service connection is available."
+            OK           -> "Service IP=[${ServiceError.serverIpAddress}:${ServiceError.httpServerPort}]. " +
+                            "Waiting for device bind request."
             WAIT           -> "Wait while loading..."
             IDLE           -> "Service is idle. Press button to rebind device"
             SERVER_FAULT   -> "Failed to start REST server. " +
-                    "TCP ports [${error.mHTTPServerPort}/${error.mHTTPSServerPort}] could be in use..."
+                    "TCP ports [${ServiceError.httpServerPort}/${ServiceError.httpsServerPort}] could be in use..."
             CONFIG_ERROR   -> "Error in configuration occurred while loading :-("
             NOT_REACHABLE  -> "LogonTouch service is not available.\nTry again or reinstall LogonTouch software"
             ACCESS_DENY    -> "Service connection is available but there are some problems in access rights" +

@@ -50,10 +50,6 @@ class RegisterClient(private val sslContextFactory: SslContextFactory, private v
     fun registerClientPrivateCertificate(privateCertificate: ClientPrivateCertificate): Response{
         mSessionContext.mClientCertificate = privateCertificate.privateCertificate
 
-        FileOutputStream(File("client_test.p12")).use {
-            it.write(privateCertificate.privateCertificate)
-        }
-
         File(LogonTouchServer.CLIENT_CREDENTIALS_FULL_PATH).useOutputWithDirs {
             it.write(privateCertificate.cipheredCredentials.toByteArray())
         }

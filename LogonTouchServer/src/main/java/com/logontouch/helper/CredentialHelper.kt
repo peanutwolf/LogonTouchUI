@@ -1,19 +1,15 @@
 package com.logontouch.helper
 
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream
 import org.apache.commons.lang3.RandomStringUtils
 import sun.security.tools.keytool.CertAndKeyGen
 import sun.security.x509.X500Name
 import java.io.ByteArrayInputStream
 import java.io.ByteArrayOutputStream
 import java.nio.charset.Charset
-import java.security.Key
 import java.security.KeyStore
-import java.security.SecureRandom
 import java.security.cert.X509Certificate
 import java.util.*
 import javax.crypto.Cipher
-import javax.crypto.SecretKey
 import javax.crypto.KeyGenerator
 import javax.crypto.spec.IvParameterSpec
 import javax.crypto.spec.SecretKeySpec
@@ -82,7 +78,7 @@ class PKCS12Helper{
         }
 
         val publicStorePass = RandomStringUtils.random(20, true, true).toCharArray()
-        val privateStorePass = "keystore.key".toCharArray()//RandomStringUtils.random(20, true, true).toCharArray()
+        val privateStorePass = RandomStringUtils.random(20, true, true).toCharArray()
         
         val certTmp: X509Certificate = certChainGen.getSelfCertificate(x500Name, 365*24*3600)
 

@@ -3,7 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/LogonTouch.iml" filepath="$PROJECT_DIR$/LogonTouch.iml" />
-      <module fileurl="file://$PROJECT_DIR$/.idea/modules/302374760/LogonTouchServer.iml" filepath="$PROJECT_DIR$/.idea/modules/302374760/LogonTouchServer.iml" group="LogonTouchServer" />
+      <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchServer.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchServer.iml" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchServer_main.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchServer_main.iml" group="LogonTouchServer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchServer_test.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchServer_test.iml" group="LogonTouchServer" />
       <module fileurl="file://$PROJECT_DIR$/.idea/modules/LogonTouchUI.iml" filepath="$PROJECT_DIR$/.idea/modules/LogonTouchUI.iml" />

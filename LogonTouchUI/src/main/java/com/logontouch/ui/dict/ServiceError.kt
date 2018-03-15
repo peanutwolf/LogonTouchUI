@@ -9,8 +9,9 @@ enum class ServiceError{
     NOT_REACHABLE,
     ACCESS_DENY;
 
-    var mHTTPServerPort = 8080
-    var mHTTPSServerPort = 7779
-
-
+    companion object {
+        var serverIpAddress = ""
+        var httpServerPort = 8080
+        var httpsServerPort = 7779
+    }
 }

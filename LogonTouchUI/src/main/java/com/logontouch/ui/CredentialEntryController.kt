@@ -8,6 +8,7 @@ import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
 import org.apache.commons.lang3.RandomStringUtils
 import tornadofx.Controller
+import java.net.InetAddress
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -39,6 +40,11 @@ class CredentialEntryController: Controller(){
         val serverCfg = LogonTouchConfigParser(cfgPath)
                 .also { it.parseConfig() }
                 .getServerConfig()
+                ?.apply {
+                    ServiceError.serverIpAddress = InetAddress.getLocalHost().hostAddress
+                    ServiceError.httpServerPort  = httpPort
+                    ServiceError.httpsServerPort = httpsPort
+                }
 
         if (serverCfg == null){
             mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
@@ -53,10 +59,7 @@ class CredentialEntryController: Controller(){
             }, {
                 mLogonTouchServer.serverStop()
                 Platform.runLater {
-                    mCredentialView.showServiceStatus(ServiceError.SERVER_FAULT.also {
-                        it.mHTTPServerPort =  serverCfg.httpPort
-                        it.mHTTPSServerPort = serverCfg.httpsPort
-                    })
+                    mCredentialView.showServiceStatus(ServiceError.SERVER_FAULT)
                 }
             })
         }.start()
