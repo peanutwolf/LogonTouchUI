@@ -8,7 +8,7 @@ import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
 import org.apache.commons.lang3.RandomStringUtils
 import tornadofx.Controller
-import java.net.InetAddress
+import java.net.*
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -41,7 +41,6 @@ class CredentialEntryController: Controller(){
                 .also { it.parseConfig() }
                 .getServerConfig()
                 ?.apply {
-                    ServiceError.serverIpAddress = InetAddress.getLocalHost().hostAddress
                     ServiceError.httpServerPort  = httpPort
                     ServiceError.httpsServerPort = httpsPort
                 }
