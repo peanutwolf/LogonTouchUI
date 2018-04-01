@@ -225,7 +225,7 @@ class LogonTouchServer{
     }
 
     companion object {
-        val LOGONTOUCH_SERVICE_FULL_PATH = getWinRegPathValue("SOFTWARE\\LogonTouch").toString()
+        val LOGONTOUCH_SERVICE_FULL_PATH = getWinRegPathValue("SOFTWARE\\LazyGravity\\LogonTouchUI").toString()
         var mConfig: ServerConfig = ServerConfig()
         set(value) {
             field = value

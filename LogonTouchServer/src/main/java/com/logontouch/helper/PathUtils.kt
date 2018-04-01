@@ -1,6 +1,7 @@
 package com.logontouch.helper
 
 import com.sun.jna.platform.win32.Advapi32Util
+import com.sun.jna.platform.win32.Win32Exception
 import com.sun.jna.platform.win32.WinReg.HKEY_LOCAL_MACHINE
 import java.io.File
 import java.nio.file.InvalidPathException
@@ -28,10 +29,16 @@ fun parsePath(path: String): Path {
         Paths.get("")
     }
 }
-//"SOFTWARE\\LogonTouch","Config"  config
-//"SOFTWARE\\LogonTouch",""  install
+//"SOFTWARE\\LazyGravity\\LogonTouchUI","Config"  config
+//"SOFTWARE\\LazyGravity\\LogonTouchUI",""  install
 fun getWinRegPathValue(regPath: String, param: String = ""): Path?  {
-    val path = Advapi32Util.registryGetStringValue(HKEY_LOCAL_MACHINE, regPath, param)
+    val path : String
+    try {
+        path = Advapi32Util.registryGetStringValue(HKEY_LOCAL_MACHINE, regPath, param)
+    }catch (exception: Throwable){
+        throw RegValueNotFoundException(param)
+    }
+
     return parsePath(path)
 }
 

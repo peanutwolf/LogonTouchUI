@@ -1,4 +1,4 @@
-package com.logontouch.ui
+package com.logontouch.helper
 
 open class InitException(msg: String? = null, reason: Throwable? = null): Exception(msg, reason)
 

@@ -3,6 +3,9 @@ package com.logontouch.ui
 import com.google.gson.Gson
 import com.logontouch.helper.*
 import com.logontouch.server.LogonTouchServer
+import com.logontouch.helper.ConfigFileNotFoundException
+import com.logontouch.helper.ConfigParseException
+import com.logontouch.helper.RegValueNotFoundException
 import com.logontouch.ui.dict.ServiceError
 import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
@@ -31,7 +34,7 @@ class CredentialEntryController: Controller(){
 
         mLogonTouchServer = LogonTouchServer()
 
-        val cfgPath = getWinRegPathValue("SOFTWARE\\LogonTouch","Config")
+        val cfgPath = getWinRegPathValue("SOFTWARE\\LazyGravity\\LogonTouchUI","Config")
                 ?: throw RegValueNotFoundException("Config")
 
         val serverCfg = LogonTouchConfigParser(cfgPath)
@@ -69,7 +72,8 @@ class CredentialEntryController: Controller(){
 
         try {
             tryInit()
-        }catch (ex: Exception){
+        }catch (ex: Throwable){
+            ex.printStackTrace()
             when(ex){
                 is RegValueNotFoundException -> mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
                 is ConfigFileNotFoundException -> {
