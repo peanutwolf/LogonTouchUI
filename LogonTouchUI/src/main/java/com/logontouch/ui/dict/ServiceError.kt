@@ -6,6 +6,7 @@ enum class ServiceError{
     WAIT,
     SERVER_FAULT,
     CONFIG_ERROR,
+    CONFIG_NOT_FOUND_ERROR,
     NOT_REACHABLE,
     ACCESS_DENY;
 
@@ -13,5 +14,6 @@ enum class ServiceError{
         var serverIpAddress = ""
         var httpServerPort = 8080
         var httpsServerPort = 7779
+        var configPath = ""
     }
 }

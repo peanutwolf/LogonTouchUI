@@ -38,6 +38,7 @@ class StatusFragment: Fragment() {
                               "TCP ports [${ServiceError.httpServerPort}/${ServiceError.httpsServerPort}] " +
                               "could be in use..."
             CONFIG_ERROR   -> "Error in configuration occurred while loading :-("
+            CONFIG_NOT_FOUND_ERROR -> "Error. Cannot find config file ${ServiceError.configPath}"
             NOT_REACHABLE  -> "LogonTouch service is not available.\nTry again or reinstall LogonTouch software"
             ACCESS_DENY    -> "Service connection is available but there are some problems in access rights" +
                               "\nTry again or reinstall LogonTouch software"

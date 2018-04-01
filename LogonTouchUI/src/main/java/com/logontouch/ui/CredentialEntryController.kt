@@ -8,10 +8,9 @@ import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
 import org.apache.commons.lang3.RandomStringUtils
 import tornadofx.Controller
-import java.net.*
+import java.io.FileNotFoundException
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
-
 
 class CredentialEntryController: Controller(){
     private lateinit var mLogonTouchServer: LogonTouchServer
@@ -25,7 +24,7 @@ class CredentialEntryController: Controller(){
         }
     }
 
-    fun init() {
+    private fun tryInit(){
         mCredentialView.showServiceStatus(ServiceError.WAIT)
 
         deInit()
@@ -33,28 +32,30 @@ class CredentialEntryController: Controller(){
         mLogonTouchServer = LogonTouchServer()
 
         val cfgPath = getWinRegPathValue("SOFTWARE\\LogonTouch","Config")
-        if (cfgPath == null){
-            mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
-            return
-        }
+                ?: throw RegValueNotFoundException("Config")
+
         val serverCfg = LogonTouchConfigParser(cfgPath)
-                .also { it.parseConfig() }
+                .also {
+                    try {
+                        it.parseConfig()
+                    }catch(fileNotFound: FileNotFoundException){
+                        throw ConfigFileNotFoundException(cfgPath.toString())
+                    }
+                }
+                .apply {
+                    ServiceError.configPath = cfgPath.toString()
+                }
                 .getServerConfig()
                 ?.apply {
                     ServiceError.httpServerPort  = httpPort
                     ServiceError.httpsServerPort = httpsPort
-                }
-
-        if (serverCfg == null){
-            mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
-            return
-        }
+                } ?: throw ConfigParseException()
 
         mLogonTouchServer.serverAssemble(serverCfg, this::onCertificateUpload)
         Thread{
-                 mLogonTouchServer.serverStart({ Platform.runLater{
-                    checkServiceAvailable()
-                }
+            mLogonTouchServer.serverStart({ Platform.runLater{
+                checkServiceAvailable()
+            }
             }, {
                 mLogonTouchServer.serverStop()
                 Platform.runLater {
@@ -62,6 +63,24 @@ class CredentialEntryController: Controller(){
                 }
             })
         }.start()
+    }
+
+    fun init() {
+
+        try {
+            tryInit()
+        }catch (ex: Exception){
+            when(ex){
+                is RegValueNotFoundException -> mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
+                is ConfigFileNotFoundException -> {
+                    ServiceError.configPath = ex.filePath
+                    mCredentialView.showServiceStatus(ServiceError.CONFIG_NOT_FOUND_ERROR)
+                }
+                is ConfigParseException -> mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
+                else -> mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
+            }
+        }
+
 
     }
 
