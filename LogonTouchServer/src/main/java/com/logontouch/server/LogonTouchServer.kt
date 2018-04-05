@@ -265,8 +265,8 @@ class LogonTouchServer{
 
         private fun defaultServerConfig(): ServerConfig{
             val config = ServerConfig()
-            config.httpPort = 8080
-            config.httpsPort = 7779
+            config.httpPort = 55470
+            config.httpsPort = 55471
             config.version   = "0.1"
             config.keysDir.path = ""
             config.keysDir.clientKeysDir.path = ""

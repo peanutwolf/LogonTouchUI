@@ -12,8 +12,8 @@ enum class ServiceError{
 
     companion object {
         var serverIpAddress = ""
-        var httpServerPort = 8080
-        var httpsServerPort = 7779
+        var httpServerPort = 55470
+        var httpsServerPort = 55471
         var configPath = ""
     }
 }

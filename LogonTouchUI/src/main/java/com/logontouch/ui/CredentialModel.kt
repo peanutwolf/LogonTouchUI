@@ -87,7 +87,7 @@ class CredentialModel{
 
     companion object {
         val LOGONTOUCH_SERVICE_IP = "127.0.0.1"
-        val LOGONTOUCH_SERVICE_PORT = "8080"
+        val LOGONTOUCH_SERVICE_PORT = "55470"
 
         val REQUEST_STATUS_PATH = "local/status"
         val REGISTER_PUBLIC_CERTIFICATE  = "local/register/public_cert"
