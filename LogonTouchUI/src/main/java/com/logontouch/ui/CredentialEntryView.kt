@@ -78,7 +78,7 @@ class CredentialsGenerateView: View(){
             else -> mCredentialEntryPane.isDisable = true
         }
         mStatusFragment.setServerIdleMode(error)
-
+        FX.primaryStage.sizeToScene()
     }
 
     fun showCredentialQR(qrArray: ByteArray) {

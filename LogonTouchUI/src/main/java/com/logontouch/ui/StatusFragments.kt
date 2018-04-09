@@ -30,10 +30,11 @@ class StatusFragment: Fragment() {
 
     fun setServerIdleMode(error: ServiceError){
         mStatusLabel.text = when(error){
-            OK           -> "Service available on port=[${ServiceError.httpServerPort}]. " +
-                            "Waiting for device bind request."
+            OK             -> "Service available on IP=${ServiceError.serverIpAddress} port=${ServiceError.httpServerPort}\n" +
+                              "Waiting for device bind request."
             WAIT           -> "Wait while loading..."
             IDLE           -> "Service is idle. Press button to rebind device"
+            CERT_UPLOADED  -> "Device bound successfully. Now you can try to unlock PC with phone."
             SERVER_FAULT   -> "Failed to start REST server. " +
                               "TCP ports [${ServiceError.httpServerPort}/${ServiceError.httpsServerPort}] " +
                               "could be in use..."

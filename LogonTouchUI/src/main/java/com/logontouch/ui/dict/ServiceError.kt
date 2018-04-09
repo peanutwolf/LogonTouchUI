@@ -3,6 +3,7 @@ package com.logontouch.ui.dict
 enum class ServiceError{
     OK,
     IDLE,
+    CERT_UPLOADED,
     WAIT,
     SERVER_FAULT,
     CONFIG_ERROR,

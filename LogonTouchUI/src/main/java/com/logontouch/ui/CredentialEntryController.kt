@@ -12,6 +12,7 @@ import net.glxn.qrgen.javase.QRCode
 import org.apache.commons.lang3.RandomStringUtils
 import tornadofx.Controller
 import java.io.FileNotFoundException
+import java.net.InetAddress
 import kotlin.properties.ReadOnlyProperty
 import kotlin.reflect.KProperty
 
@@ -50,6 +51,7 @@ class CredentialEntryController: Controller(){
                 }
                 .getServerConfig()
                 ?.apply {
+                    ServiceError.serverIpAddress = InetAddress.getLocalHost().hostAddress
                     ServiceError.httpServerPort  = httpPort
                     ServiceError.httpsServerPort = httpsPort
                     mCredentialModel.logonTouchPort = httpPort
@@ -100,7 +102,7 @@ class CredentialEntryController: Controller(){
         runAsync {
             deInit()
         }ui {
-            mCredentialView.showServiceStatus(ServiceError.IDLE)
+            mCredentialView.showServiceStatus(ServiceError.CERT_UPLOADED)
             mCredentialView.hideCredentialQR()
         }
     }
