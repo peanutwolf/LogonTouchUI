@@ -52,6 +52,7 @@ class CredentialEntryController: Controller(){
                 ?.apply {
                     ServiceError.httpServerPort  = httpPort
                     ServiceError.httpsServerPort = httpsPort
+                    mCredentialModel.logonTouchPort = httpPort
                 } ?: throw ConfigParseException()
 
         mLogonTouchServer.serverAssemble(serverCfg, this::onCertificateUpload)

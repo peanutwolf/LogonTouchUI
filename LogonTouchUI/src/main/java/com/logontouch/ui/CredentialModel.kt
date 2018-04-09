@@ -16,11 +16,15 @@ class CredentialModel{
     private val mCredentialHelper: PKCS12Helper = PKCS12Helper()
     private val mCipherHelper: AESCipherHelper = AESCipherHelper()
 
+    var logonTouchIp = "127.0.0.1"
+    var logonTouchPort = 55470
+
+
     fun getCredentialServiceStatus(): Int{
         var resp = 403
 
         try {
-            val url = URL("http://$LOGONTOUCH_SERVICE_IP:$LOGONTOUCH_SERVICE_PORT/$REQUEST_STATUS_PATH")
+            val url = URL("http://$logonTouchIp:$logonTouchPort/$REQUEST_STATUS_PATH")
             val con = (url.openConnection() as HttpURLConnection).apply {
                 this.requestMethod = "GET"
             }
@@ -41,7 +45,7 @@ class CredentialModel{
         var resp = 403
 
         try {
-            val url = URL("http://$LOGONTOUCH_SERVICE_IP:$LOGONTOUCH_SERVICE_PORT/$postPath")
+            val url = URL("http://$logonTouchIp:$logonTouchPort/$postPath")
             val con = (url.openConnection() as HttpURLConnection).apply {
                 this.requestMethod = "POST"
                 this.setRequestProperty("Content-Type", "application/json")
@@ -86,9 +90,6 @@ class CredentialModel{
     }
 
     companion object {
-        val LOGONTOUCH_SERVICE_IP = "127.0.0.1"
-        val LOGONTOUCH_SERVICE_PORT = "55470"
-
         val REQUEST_STATUS_PATH = "local/status"
         val REGISTER_PUBLIC_CERTIFICATE  = "local/register/public_cert"
         val REGISTER_PRIVATE_CERTIFICATE = "local/register/private_cert"
