@@ -10,6 +10,7 @@ import com.logontouch.ui.dict.ServiceError
 import javafx.application.Platform
 import net.glxn.qrgen.javase.QRCode
 import org.apache.commons.lang3.RandomStringUtils
+import org.apache.logging.log4j.LogManager
 import tornadofx.Controller
 import java.io.FileNotFoundException
 import java.net.InetAddress
@@ -20,6 +21,7 @@ class CredentialEntryController: Controller(){
     private lateinit var mLogonTouchServer: LogonTouchServer
     private val mCredentialModel: CredentialModel by CredentialModelDelegate()
     private val mCredentialView: CredentialsGenerateView by inject()
+    private val logger = LogManager.getLogger(CredentialEntryController::class.java)
 
     init {
         val current = getWinLogonAccount()
@@ -63,6 +65,7 @@ class CredentialEntryController: Controller(){
                 checkServiceAvailable()
             }
             }, {
+                logger.error("Failed to start LogonTouchServer\n", it)
                 mLogonTouchServer.serverStop()
                 Platform.runLater {
                     mCredentialView.showServiceStatus(ServiceError.SERVER_FAULT)
@@ -76,7 +79,7 @@ class CredentialEntryController: Controller(){
         try {
             tryInit()
         }catch (ex: Throwable){
-            ex.printStackTrace()
+            logger.error("Failed to initialize CredentialEntryController\n", ex)
             when(ex){
                 is RegValueNotFoundException -> mCredentialView.showServiceStatus(ServiceError.CONFIG_ERROR)
                 is ConfigFileNotFoundException -> {
@@ -164,18 +167,4 @@ class CredentialEntryController: Controller(){
         }
     }
 
-}
-
-class LogonTouchServerDelegate: ReadOnlyProperty<Any?, LogonTouchServer> {
-    fun updateInstance(){
-        model = LogonTouchServer()
-    }
-
-    override fun getValue(thisRef: Any?, property: KProperty<*>): LogonTouchServer {
-        return model
-    }
-
-    companion object {
-        private var model = LogonTouchServer()
-    }
 }

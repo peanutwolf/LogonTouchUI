@@ -4,6 +4,7 @@ import com.google.gson.Gson
 import com.logontouch.helper.ClientCertificate
 import com.logontouch.helper.HostCertificate
 import com.logontouch.server.LogonTouchServer
+import org.apache.logging.log4j.LogManager
 import java.io.File
 import javax.ws.rs.*
 import javax.ws.rs.core.MediaType
@@ -11,15 +12,19 @@ import javax.ws.rs.core.Response
 
 @Path("register")
 class ProvideClient(private val mSessionContext: SessionContext){
+    private val logger = LogManager.getLogger(ProvideClient::class.java)
 
     @GET
     @Path("private_cert")
     @Produces(MediaType.APPLICATION_JSON)
     fun requestCertificate(@DefaultValue("") @QueryParam("hash") reqHash: String): Response {
         when{
-            mSessionContext.mSessionHash == null       -> return Response.status(403).build()
-            mSessionContext.mClientCertificate == null -> return Response.status(403).build()
-            reqHash != mSessionContext.mSessionHash    -> return Response.status(403).build()
+            mSessionContext.mSessionHash == null ||
+            mSessionContext.mClientCertificate == null ||
+            reqHash != mSessionContext.mSessionHash       -> {
+                logger.info("[requestCertificate] Response with status=403. Certificate not registered.")
+                return Response.status(403).build()
+            }
         }
 
         return Response.status(200).apply {
@@ -58,6 +63,7 @@ class ProvideClient(private val mSessionContext: SessionContext){
             mSessionContext.mClientCertificate == null -> Response.status(410).build()
             reqHash == mSessionContext.mSessionHash
                     && reqResult == "true"             ->{
+                logger.info("[getServiceStatus] Received positive bind status from client")
                 mSessionContext.mSessionHash = null
                 mSessionContext.mClientCertificate = null
                 mSessionContext.onCertificateUpload()

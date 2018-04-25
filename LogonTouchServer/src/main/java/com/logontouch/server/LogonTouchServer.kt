@@ -7,6 +7,7 @@ import com.logontouch.helper.getWinRegPathValue
 import com.logontouch.mapping.ServerConfig
 import com.logontouch.server.rest.*
 import com.logontouch.server.rest.utils.GsonProvider
+import org.apache.logging.log4j.LogManager
 import org.eclipse.jetty.server.*
 import org.eclipse.jetty.server.handler.ContextHandler
 import org.eclipse.jetty.server.handler.ContextHandlerCollection
@@ -100,6 +101,9 @@ class LogonTouchServer{
         val serverKey = File(SERVER_PRIVATE_PASSPHRASE_FULL_PATH).useReaderWithDirs {
             it.readLine()
         }
+
+        sslContextFactory.keyStoreType   = "PKCS12"
+        sslContextFactory.trustStoreType = "PKCS12"
 
         sslContextFactory.keyStorePath = SERVER_PRIVATE_KEYSTORE_FULL_PATH
         sslContextFactory.setKeyStorePassword(serverKey)
