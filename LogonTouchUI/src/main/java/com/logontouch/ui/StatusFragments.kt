@@ -4,6 +4,7 @@ import com.logontouch.ui.dict.ServiceError
 import com.logontouch.ui.dict.ServiceError.*
 import javafx.geometry.Pos
 import javafx.scene.control.Label
+import javafx.scene.control.ProgressIndicator
 import javafx.scene.image.ImageView
 import javafx.scene.layout.VBox
 import tornadofx.*
@@ -11,14 +12,14 @@ import tornadofx.*
 class StatusFragment: Fragment() {
     override val root = VBox()
     private var mStatusLabel: Label by singleAssign()
-     var mCredentialQR: ImageView by singleAssign()
+    var mCredentialQR: ImageView by singleAssign()
 
     init {
 
         root += vbox {
             this.alignment = Pos.CENTER
 
-            mCredentialQR = imageview {}
+            mCredentialQR = imageview ()
             mCredentialQR.isVisible = false
 
         }

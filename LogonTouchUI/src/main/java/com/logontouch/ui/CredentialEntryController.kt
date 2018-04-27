@@ -111,6 +111,7 @@ class CredentialEntryController: Controller(){
     }
 
     fun onCredentialEntry(username: String, password: String) {
+        mCredentialView.showCredentialQrLoader(true)
         runAsync {
             val (domain, login ) = username.let {
                 return@let Pair(it.substringBefore('\\', ""),
@@ -120,6 +121,7 @@ class CredentialEntryController: Controller(){
                 genSecretKeysQR(it)
             }
         } ui {
+            mCredentialView.showCredentialQrLoader(false)
             mCredentialView.showCredentialQR(it)
         }
     }
