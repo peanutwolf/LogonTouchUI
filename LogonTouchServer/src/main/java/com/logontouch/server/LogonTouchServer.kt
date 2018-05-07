@@ -148,9 +148,9 @@ class LogonTouchServer{
         return httpContext
     }
 
-    private fun createLocalHTTPContext(sslContextFactory: SslContextFactory, sessionContext: SessionContext): Handler{
+    private fun createLocalHTTPContext(sessionContext: SessionContext): Handler{
         val httpResConfig = ResourceConfig()
-        httpResConfig.register(RegisterClient(sslContextFactory, sessionContext))
+        httpResConfig.register(RegisterClient(sessionContext))
         httpResConfig.register(ServerHTTPStatus())
         httpResConfig.register(GsonProvider::class.java)
 
@@ -203,7 +203,7 @@ class LogonTouchServer{
         val handlerList = ContextHandlerCollection()
         handlerList.handlers = arrayOf(
                 redirectHandler,
-                createLocalHTTPContext(sslContextFactory, mutualSessionContext),
+                createLocalHTTPContext(mutualSessionContext),
                 createGlobalHTTPContext(mutualSessionContext),
                 createHTTPSContext()
         )
@@ -227,6 +227,7 @@ class LogonTouchServer{
     fun serverStop(){
         mJettyServer.stop()
     }
+
 
     companion object {
         val LOGONTOUCH_SERVICE_FULL_PATH = getWinRegPathValue("SOFTWARE\\LazyGravity\\LogonTouchUI").toString()
